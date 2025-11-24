@@ -31,7 +31,6 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       isAuthenticated: false,
 
-      // Inside (set, get) => ({ ... })
 
       login: async (token: string) => {
         set({ token });
@@ -68,7 +67,6 @@ export const useAuthStore = create<AuthState>()(
         }
       },
 
-      /** 🔁 Refresh current user info if token is still valid */
       refreshUser: async () => {
         const isValid = get().checkTokenValidity();
 
@@ -101,18 +99,15 @@ export const useAuthStore = create<AuthState>()(
           const now = Date.now() / 1000;
           const isExpired = decoded.exp < now;
 
-          // ❌ REMOVED: get().logout() call here
           if (isExpired) {
             console.warn("JWT is expired based on calculation.");
-            return false; // Let the caller decide to logout
+            return false;
           }
 
           return true;
         } catch (error) {
-          // Catch block should always specify error type if possible
           console.error("Invalid token format.");
-          // ❌ REMOVED: get().logout() call here
-          return false; // Let the caller decide to logout
+          return false; 
         }
       },
 
