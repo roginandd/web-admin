@@ -1,17 +1,28 @@
 import LoginPage from "./components/LoginPage";
-import { Route, Routes } from "react-router-dom";
-import Dashboard from "./components/Dashboard";
+import { Navigate, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
-// Note: We no longer need to import useAuthStore here if ProtectedRoute handles it
+import DashBoardLayout from "./layout/DashboardLayout";
+import DashboardHome from "./components/DashboardHome";
+import { useAuthStore } from "./stores/auth_store";
 
 function App() {
+  const { token } = useAuthStore.getState();
+
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
+      <Route
+        path="/login"
+        element={token ? <Navigate to="/dashboard" replace /> : <LoginPage />}
+      />
 
+      {/* Protected routes */}
       <Route
         path="/dashboard"
-        element={<ProtectedRoute element={<Dashboard />} />}
+        element={
+          <ProtectedRoute
+            element={<DashBoardLayout children={<DashboardHome />} />}
+          />
+        }
       />
 
       <Route
@@ -21,6 +32,12 @@ function App() {
             element={<h2>User Profile for authenticated users</h2>}
           />
         }
+      />
+
+      {/* Catch all unknown routes */}
+      <Route
+        path="*"
+        element={<Navigate to={token ? "/dashboard" : "/login"} replace />}
       />
     </Routes>
   );
