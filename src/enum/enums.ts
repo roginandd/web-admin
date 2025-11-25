@@ -1,4 +1,5 @@
 export const Role = {
+  Admin: 2,
   COURIER: 1,
   CUSTOMER: 0,
 } as const;

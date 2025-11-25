@@ -28,6 +28,7 @@ export default function LoginPage() {
       console.log(`RESPONSE TOKEN: ${response.token}`);
 
       await useAuthStore.getState().login(response.token);
+      
 
       console.log(
         "Auth storage:",
@@ -41,7 +42,8 @@ export default function LoginPage() {
       console.error("Login failed:", err);
     }
   };
-
+  
+  
   return (
     <div className="h-screen flex flex-col">
       <div>

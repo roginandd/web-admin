@@ -10,6 +10,7 @@ interface AuthState {
   user: UserResponseDTO | null;
   isAuthenticated: boolean;
   login: (token: string) => Promise<void>;
+  isAdmin: boolean;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
   checkTokenValidity: () => boolean;
@@ -30,7 +31,7 @@ export const useAuthStore = create<AuthState>()(
       token: null,
       user: null,
       isAuthenticated: false,
-
+      isAdmin: false,
 
       login: async (token: string) => {
         set({ token });
@@ -43,10 +44,17 @@ export const useAuthStore = create<AuthState>()(
           return;
         }
 
-        set({ isAuthenticated: true });
-
         try {
           const user = await getCurrentProfile();
+          console.log(`CURRENT ROLE: ${user.currentRole}`);
+
+          if (user?.currentRole !== 2) {
+            alert("Unauthorized Access");
+            await get().logout();
+            return;
+          }
+
+          set({ isAuthenticated: true });
           set({ user });
         } catch (err) {
           console.error("Failed to fetch profile after login:", err);
@@ -107,7 +115,7 @@ export const useAuthStore = create<AuthState>()(
           return true;
         } catch (error) {
           console.error("Invalid token format.");
-          return false; 
+          return false;
         }
       },
 

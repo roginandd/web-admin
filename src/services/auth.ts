@@ -17,6 +17,8 @@ export const loginUser = async (
     return response.data;
   } catch (err: any) {
     console.error(err);
+    alert("Unauthorized Access");
+
     throw err;
   }
 };
