@@ -34,6 +34,8 @@ export default function UserDetailModal({
     "credentials"
   );
 
+  const [isAccepting, setIsAccepting] = useState(false);
+  const [isRejecting, setIsRejecting] = useState(false);
   // Located near the top of the component logic:
 
   const handleApprove = async () => {
@@ -42,7 +44,7 @@ export default function UserDetailModal({
 
   const handleReject = async () => {
     await updateVerification(2, user.userIdPK);
-  };  
+  };
 
   const updateVerification = async (
     status: VerificationInfoStatus,
@@ -56,6 +58,9 @@ export default function UserDetailModal({
         `User ${status === 1 ? "approved" : "rejected"} successfully`
       );
       if (onUpdateSuccess) onUpdateSuccess(response.verificationInfoStatus);
+
+      if (status === 1) setIsAccepting(true);
+      else setIsRejecting(true);
       onClose();
     } catch (err) {
       console.error(err);
@@ -212,26 +217,21 @@ export default function UserDetailModal({
             </div>
             {/* Action Buttons */}
             <div className="flex gap-2 pt-4">
-              {status.toLowerCase() === "pending" ||
-                (status.toLowerCase() === "rejected" && (
-                  <Button
-                    onClick={handleApprove}
-                    disabled={isUpdating}
-                    className="flex-1 bg-green-600 hover:bg-green-700 text-white"
-                  >
-                    {isUpdating ? "Approving..." : "Approve"}
-                  </Button>
-                ))}
+              <Button
+                onClick={handleApprove}
+                disabled={isAccepting}
+                className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+              >
+                {isAccepting ? "Approving..." : "Approve"}
+              </Button>
 
-              {status.toLowerCase() !== "rejected" && (
-                <Button
-                  onClick={handleReject}
-                  disabled={isUpdating}
-                  className="flex-1 bg-red-600 hover:bg-red-700 text-white"
-                >
-                  {isUpdating ? "Rejecting..." : "Reject"}
-                </Button>
-              )}
+              <Button
+                onClick={handleReject}
+                disabled={isRejecting}
+                className="flex-1 bg-red-600 hover:bg-red-700 text-white"
+              >
+                {isRejecting ? "Rejecting..." : "Reject"}
+              </Button>
 
               <Button onClick={onClose} variant="outline" className="flex-1">
                 Close
