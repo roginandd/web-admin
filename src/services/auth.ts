@@ -10,7 +10,7 @@ export const loginUser = async (
 
     if (!username.trim() || !password.trim())
       throw new Error("Empty Credentials");
-
+    
     const response = await api.post(`/Authentication/login`, userRequest);
 
     console.log(`RECEIVED TOKEN: ${response.data.token}`);

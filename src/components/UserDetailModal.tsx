@@ -121,24 +121,9 @@ export default function UserDetailModal({
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="text-sm font-medium text-gray-600">
-                  Phone
+                  Username
                 </label>
-                <p className="mt-1">{user.phone}</p>
-              </div>
-
-              <div>
-                <label className="text-sm font-medium text-gray-600">
-                  Company
-                </label>
-                {/* Assuming company/position data might be empty based on your original code */}
-                <p className="mt-1"></p>
-              </div>
-
-              <div>
-                <label className="text-sm font-medium text-gray-600">
-                  Position
-                </label>
-                <p className="mt-1"></p>
+                <p className="mt-1">{user.username}</p>
               </div>
 
               <div>
@@ -150,8 +135,6 @@ export default function UserDetailModal({
                 </p>
               </div>
             </div>
-            ---
-            {/* Tab/Toggle Navigation */}
             <div className="flex border-b border-gray-200 ">
               <button
                 className={

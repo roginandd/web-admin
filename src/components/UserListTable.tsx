@@ -64,10 +64,10 @@ export default function UsersListTable({
               Full Name
             </th>
             <th className="px-6 py-4 text-left text-sm font-semibold text-slate-600 dark:text-slate-400">
-              Email
+              Username
             </th>
             <th className="px-6 py-4 text-left text-sm font-semibold text-slate-600 dark:text-slate-400">
-              Phone
+              Email
             </th>
 
             <th className="px-6 py-4 text-center text-sm font-semibold text-slate-600 dark:text-slate-400">
@@ -100,10 +100,10 @@ export default function UsersListTable({
                   )}
                 </td>
                 <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
-                  {user.email}
+                  {user.username}
                 </td>
                 <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
-                  {user.phone}
+                  {user.email}
                 </td>
 
                 <td className="px-6 py-4 text-center">
